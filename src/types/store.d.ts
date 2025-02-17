@@ -2,16 +2,8 @@ export type dogsState = {
   breeds: string[];
   total: number;
   dogsID: string[];
-  dogs: {
-    age: number;
-    breed: string;
-    id: string;
-    img: string;
-    name: string;
-    zip_code: locationType;
-  }[];
+  dogs: dogsType[];
   loading: boolean;
-  locations: { zipCodes: string[]; total: number };
 };
 
 export type locationType = {
@@ -29,7 +21,16 @@ export type dogType = {
   id: string;
   img: string;
   name: string;
-  zip_code: string;
+  zip_code: string | null;
+};
+
+export type dogsType = {
+  age: number;
+  breed: string;
+  id: string;
+  img: string;
+  name: string;
+  zip_code: locationType;
 };
 
 export type authStateType = {
@@ -48,4 +49,8 @@ export type searchDogsIDActionResponse = {
   prev: string;
   resultIds: string[];
   total: number;
+};
+
+export type getDogsActionResponse = {
+  data: dogType[];
 };
