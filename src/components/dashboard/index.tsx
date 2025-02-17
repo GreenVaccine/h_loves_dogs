@@ -18,9 +18,9 @@ const DashBoardIndex = ({ children }: { children: React.ReactNode }) => {
     <div className="flex w-full min-h-screen">
       <div className="page-wrapper flex w-full">
         <Sidebar />
-        <div className="body-wrapper w-full bg-lightgray dark:bg-dark">
+        <div className="body-wrapper w-full bg-muted dark:bg-dark">
           <Header />
-          <div className="container bg-muted mx-auto py-30">{children}</div>
+          <div className="container mx-auto py-30">{children}</div>
         </div>
       </div>
     </div>

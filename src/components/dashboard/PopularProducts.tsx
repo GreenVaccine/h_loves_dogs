@@ -18,7 +18,7 @@ import { dogsType } from "@/types/store";
 import { handleIntegerValidation } from "../validation/dashboard";
 
 const PopularProducts = () => {
-  const { dogs, total, breeds } = useSelector(selectDogs);
+  const { dogs, total, breeds, loading } = useSelector(selectDogs);
   const dogIds = useSelector(selectDogIDs);
   const dispatch = useDispatch<AppDispatch>();
   const initialValue = {
@@ -88,6 +88,19 @@ const PopularProducts = () => {
     }));
   };
 
+  const handleGoPageNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const number = Number(
+      handleIntegerValidation(
+        e.target.value,
+        Math.ceil(total / Number(search.page.perPage))
+      )
+    );
+    setSearch((pre) => ({
+      ...pre,
+      page: { ...pre.page, number: number === 0 ? 1 : number },
+    }));
+  };
+
   const handleMultiSelectOptions = () => {
     const options = breeds
       .filter((breed) => breed.toLowerCase().includes(searchTerm.toLowerCase()))
@@ -129,18 +142,20 @@ const PopularProducts = () => {
     setSelectedDog(null);
   };
 
-  if (dogs.length < 1) {
-    return <></>;
-  }
-
   return (
-    <div className="rounded-lg dark:shadow-dark-md shadow-md bg-white dark:bg-darkgray py-6 px-0 relative w-full break-words">
+    <div className="rounded-sm dark:shadow-dark-md shadow-md bg-white dark:bg-darkgray py-6 px-0 relative w-full break-words">
       <div className="px-6">
         <h5 className="card-title">We love dogs</h5>
-        {/* <p className="card-subtitle">Total 9k Visitors</p> */}
       </div>
-      <div className="flex flex-row justify-between px-10 items-end">
-        <div className="flex items-center w-1/2">
+      <div className="flex flex-row animate-pulse justify-between px-6 items-end">
+        <div className="flex h-12 w-96 bg-gray-200 rounded-md" />
+        <div className="flex justify-between">
+          <div className="flex h-12 w-32 bg-gray-200 rounded-md mr-10" />
+          <div className="flex h-12 w-32 bg-gray-200 rounded-md ml-10" />
+        </div>
+      </div>
+      <div className="flex flex-row justify-between px-6 items-end">
+        <div className="flex items-center w-3/5">
           <Pagination
             layout="pagination"
             currentPage={search.page.number}
@@ -149,7 +164,7 @@ const PopularProducts = () => {
             onPageChange={handlePageNumChange}
           />
         </div>
-        <div className="flex justify-between w-1/2">
+        <div className="flex justify-between w-2/5">
           <div className="flex items-center">
             <label className="text-sm font-medium text-gray-700">
               Per Page:
@@ -170,26 +185,20 @@ const PopularProducts = () => {
               type="number"
               className="w-24"
               placeholder={`${Math.ceil(total / Number(search.page.perPage))}`}
-              onChange={(e) =>
-                setSearch((pre) => ({
-                  ...pre,
-                  page: {
-                    ...pre.page,
-                    number: Number(
-                      handleIntegerValidation(
-                        e.target.value,
-                        Math.ceil(total / Number(search.page.perPage))
-                      )
-                    ),
-                  },
-                }))
-              }
+              onChange={handleGoPageNumber}
             />
           </div>
         </div>
       </div>
-      <div className="flex flex-row justify-between px-10 items-end mt-4">
-        <div className="flex items-center w-1/2">
+      <div className="flex flex-row animate-pulse justify-between px-6 items-end mt-4">
+        <div className="flex h-12 w-64 bg-gray-200 rounded-md" />
+        <div className="flex justify-between">
+          <div className="flex h-12 w-32 bg-gray-200 rounded-md mr-10" />
+          <div className="flex h-12 w-32 bg-gray-200 rounded-md ml-10" />
+        </div>
+      </div>
+      <div className="flex flex-row justify-between px-6 items-end mt-4">
+        <div className="flex items-center w-3/5">
           <MultiSelect
             options={handleMultiSelectOptions()}
             isMulti
@@ -205,7 +214,7 @@ const PopularProducts = () => {
             classNamePrefix="select"
           />
         </div>
-        <div className="flex justify-between w-1/2">
+        <div className="flex justify-between w-2/5">
           <div className="flex items-center">
             <label className="text-sm font-medium text-gray-700">MinAge:</label>
             <TextInput
@@ -270,77 +279,170 @@ const PopularProducts = () => {
                 onClick={() => handleSort("age")}
                 style={{ cursor: "pointer" }}
               >
-                Age{" "}
+                Age
                 {search.sort.startsWith("age") && (
                   <span>{search.sort.endsWith("asc") ? " ↑" : " ↓"}</span>
                 )}
               </Table.HeadCell>
-              <Table.HeadCell>ZipCode</Table.HeadCell>
+              <Table.HeadCell>Location</Table.HeadCell>
             </Table.Head>
             <Table.Body className="divide-y divide-border dark:divide-darkborder ">
-              {dogs.map((dog, index) => (
-                <Table.Row key={index}>
-                  <Table.Cell
-                    className="whitespace-nowrap ps-6"
-                    onClick={() => openModal(dog)}
-                  >
-                    <div className="flex items-center">
-                      <Image
-                        src={dog.img}
-                        alt="icon"
-                        width={60}
-                        height={60}
-                        className="h-[60px] w-[60px] rounded-md"
-                      />
-                    </div>
-                  </Table.Cell>
-                  <Table.Cell>
-                    <div className="truncat line-clamp-2 sm:text-wrap max-w-56">
-                      <h6 className="text-sm">{dog.name}</h6>
-                    </div>
-                  </Table.Cell>
-                  <Table.Cell>
-                    <div className="text-sm font-medium text-dark opacity-70 mb-2 text-wrap">
-                      {dog.breed}
-                    </div>
-                  </Table.Cell>
-                  <Table.Cell>{dog.age}</Table.Cell>
-                  <Table.Cell>
-                    {dog.zip_code
-                      ? `${dog.zip_code.city}, ${dog.zip_code?.county}, ${dog.zip_code?.state}`
-                      : "N/A"}
-                  </Table.Cell>
-                </Table.Row>
-              ))}
+              {loading
+                ? new Array(search.page.perPage)
+                    .fill(0)
+                    .map((_, index: number) => (
+                      <Table.Row key={index}>
+                        <Table.Cell className="whitespace-nowrap ps-6">
+                          <div className="flex animate-pulse items-center">
+                            <div className="h-[60px] w-[60px] bg-gray-200 rounded-md" />
+                          </div>
+                        </Table.Cell>
+                        <Table.Cell>
+                          <div className="flex animate-pulse items-center ">
+                            <div className="h-6 w-20 bg-gray-200 rounded-md" />
+                          </div>
+                        </Table.Cell>
+                        <Table.Cell>
+                          <div className="flex animate-pulse items-center ">
+                            <div className="h-6 w-32 bg-gray-200 rounded-md" />
+                          </div>
+                        </Table.Cell>
+                        <Table.Cell>
+                          <div className="flex animate-pulse items-center ">
+                            <div className="h-6 w-8 bg-gray-200 rounded-md" />
+                          </div>
+                        </Table.Cell>
+                        <Table.Cell>
+                          <div className="flex animate-pulse items-center ">
+                            <div className="h-6 w-64 bg-gray-200 rounded-md" />
+                          </div>
+                        </Table.Cell>
+                      </Table.Row>
+                    ))
+                : dogs.map((dog, index) => (
+                    <Table.Row key={index} onClick={() => openModal(dog)}>
+                      <Table.Cell className="whitespace-nowrap ps-6">
+                        <div className="flex items-center">
+                          <Image
+                            src={dog.img}
+                            alt="icon"
+                            width={60}
+                            height={60}
+                            className="h-[60px] w-[60px] rounded-md"
+                          />
+                        </div>
+                      </Table.Cell>
+                      <Table.Cell>
+                        <div className="truncat line-clamp-2 sm:text-wrap max-w-56">
+                          <h6 className="text-sm">{dog.name}</h6>
+                        </div>
+                      </Table.Cell>
+                      <Table.Cell>
+                        <div className="text-sm font-medium text-dark opacity-70 mb-2 text-wrap">
+                          {dog.breed}
+                        </div>
+                      </Table.Cell>
+                      <Table.Cell>{dog.age}</Table.Cell>
+                      <Table.Cell>
+                        {dog.zip_code
+                          ? `${dog.zip_code.city}, ${dog.zip_code?.county}, ${dog.zip_code?.state}`
+                          : "N/A"}
+                      </Table.Cell>
+                    </Table.Row>
+                  ))}
             </Table.Body>
           </Table>
         </div>
       </SimpleBar>
+      <div className="flex flex-row justify-between px-6 items-end">
+        <div className="flex items-center w-3/5">
+          <Pagination
+            layout="pagination"
+            currentPage={search.page.number}
+            totalPages={Math.ceil(total / Number(search.page.perPage))}
+            showIcons
+            onPageChange={handlePageNumChange}
+          />
+        </div>
+        <div className="flex justify-between w-2/5">
+          <div className="flex items-center">
+            <label className="text-sm font-medium text-gray-700">
+              Per Page:
+            </label>
+            <Select
+              value={search.page.perPage}
+              onChange={handlePerPageChange}
+              className="w-24"
+            >
+              <option value="10">10</option>
+              <option value="25">25</option>
+              <option value="50">50</option>
+            </Select>
+          </div>
+          <div className="flex items-center">
+            <label className="text-sm font-medium text-gray-700">Go To:</label>
+            <TextInput
+              type="number"
+              className="w-24"
+              placeholder={`${Math.ceil(total / Number(search.page.perPage))}`}
+              onChange={handleGoPageNumber}
+            />
+          </div>
+        </div>
+      </div>
       <Modal show={modalOpen} onClose={closeModal}>
-        <Modal.Header>{selectedDog?.name}</Modal.Header>
+        <Modal.Header></Modal.Header>
         <Modal.Body>
           <div className="flex flex-col items-center">
-            {selectedDog?.img && (
-              <Image
-                src={selectedDog.img}
-                alt={selectedDog.name}
-                width={800}
-                height={600}
-                className="rounded-md mb-4"
-              />
+            {selectedDog === null ? (
+              <div className="grid col-span-full animate-pulse items-center">
+                <div className="flex flex-row justify-between">
+                  <div className="h-6 w-20 bg-gray-200 rounded-md" />
+                  <div className="h-6 w-32 bg-gray-200 rounded-md" />
+                </div>
+                <div className="flex flex-row justify-between">
+                  <div className="h-6 w-8 bg-gray-200 rounded-md" />
+                  <div className="h-6 w-64 bg-gray-200 rounded-md" />
+                </div>
+                <div className="h-[300px] w-[400px] bg-gray-200 rounded-md mb-4" />
+              </div>
+            ) : (
+              <div className="grid col-span-full items-center">
+                <div className="flex flex-row justify-between">
+                  <div>
+                    <strong>Name: {selectedDog.name}</strong>
+                  </div>
+                  <div>
+                    <strong>Breed: {selectedDog.breed}</strong>
+                  </div>
+                </div>
+                <div className="flex flex-row justify-between">
+                  <div>
+                    <strong>Age: {selectedDog.age} years</strong>
+                  </div>
+                  <div>
+                    <strong>
+                      {" "}
+                      Location:{" "}
+                      {selectedDog.zip_code
+                        ? `${selectedDog.zip_code.city}, ${selectedDog.zip_code?.county}, ${selectedDog.zip_code?.state}`
+                        : "N/A"}
+                    </strong>
+                  </div>
+                </div>
+                <div className="h-[300px] w-[400px] rounded-md mb-4">
+                  {selectedDog.img && (
+                    <Image
+                      src={selectedDog.img}
+                      alt={selectedDog.name}
+                      width={400}
+                      height={300}
+                      className="rounded-md"
+                    />
+                  )}
+                </div>
+              </div>
             )}
-            <p>
-              <strong>Breed:</strong> {selectedDog?.breed}
-            </p>
-            <p>
-              <strong>Age:</strong> {selectedDog?.age} years
-            </p>
-            <p>
-              <strong>Zip Code:</strong>{" "}
-              {selectedDog?.zip_code
-                ? `${selectedDog?.zip_code.city}, ${selectedDog?.zip_code?.county}, ${selectedDog?.zip_code?.state}`
-                : "N/A"}
-            </p>
           </div>
         </Modal.Body>
       </Modal>
