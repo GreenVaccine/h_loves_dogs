@@ -1,12 +1,9 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Badge, Button, Navbar } from "flowbite-react";
+import { Badge, Navbar } from "flowbite-react";
 import { Icon } from "@iconify/react";
-import Profile from "./Profile";
-import FullLogo from "../../shared/logo/FullLogo";
 import { Drawer } from "flowbite-react";
 import MobileSidebar from "../sidebar/MobileSidebar";
-import Link from "next/link";
 
 const Header = () => {
   const [isSticky, setIsSticky] = useState(false);
@@ -53,10 +50,7 @@ const Header = () => {
               >
                 <Icon icon="solar:hamburger-menu-line-duotone" height={21} />
               </span>
-              <span className="h-10 w-10 hover:text-primary hover:bg-lightprimary rounded-full flex justify-center items-center cursor-pointer relative">
-                <Icon icon="solar:bell-linear" height={20} />
-                <Badge className="h-2 w-2 rounded-full absolute end-2 top-1 bg-primary p-0"></Badge>
-              </span>
+              <span className="h-10 w-10 rounded-full flex justify-center items-center cursor-pointer relative"></span>
             </div>
           </div>
         </Navbar>
