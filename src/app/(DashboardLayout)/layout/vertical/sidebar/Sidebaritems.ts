@@ -31,34 +31,11 @@ const SidebarContent: MenuItem[] = [
         id: uniqueId(),
         url: "/",
       },
-    ],
-  },
-  {
-    heading: "Utilities",
-    children: [
       {
-        name: "Typography",
-        icon: "solar:text-circle-outline",
+        name: "Logout",
+        icon: "solar:logout-2-linear",
         id: uniqueId(),
-        url: "/ui/typography",
-      },
-      {
-        name: "Table",
-        icon: "solar:bedside-table-3-linear",
-        id: uniqueId(),
-        url: "/ui/table",
-      },
-      {
-        name: "Form",
-        icon: "solar:password-minimalistic-outline",
-        id: uniqueId(),
-        url: "/ui/form",
-      },
-      {
-        name: "Shadow",
-        icon: "solar:airbuds-case-charge-outline",
-        id: uniqueId(),
-        url: "/ui/shadow",
+        url: "/auth/login",
       },
     ],
   },
@@ -76,17 +53,6 @@ const SidebarContent: MenuItem[] = [
         icon: "solar:shield-user-outline",
         id: uniqueId(),
         url: "/auth/register",
-      },
-    ],
-  },
-  {
-    heading: "Extra",
-    children: [
-      {
-        name: "Icons",
-        icon: "solar:smile-circle-outline",
-        id: uniqueId(),
-        url: "/icons/solar",
       },
     ],
   },

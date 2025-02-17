@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect } from "react";
-import PopularProducts from "@/components/dashboard/PopularProducts";
-import Link from "next/link";
+import Main from "@/components/dashboard/main";
 
 import { getBreedsAction } from "@/store/dogs";
 import { useDispatch } from "react-redux";
@@ -17,7 +16,7 @@ const page = () => {
     <>
       <div className="grid grid-cols-12 gap-30 bg-muted dark:bg-dark">
         <div className="col-span-12 mb-2">
-          <PopularProducts />
+          <Main />
         </div>
       </div>
     </>
