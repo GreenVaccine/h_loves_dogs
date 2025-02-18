@@ -27,8 +27,11 @@ export const getBreedsAction = createAsyncThunk<
     const response = await api.get<Response<string[]>>("/dogs/breeds");
     return response.data;
   } catch (error: any) {
+    const user = thunkAPI.getState().auth;
     if (error.response?.status === 401) {
-      await thunkAPI.dispatch(signInAction());
+      await thunkAPI.dispatch(
+        signInAction({ name: user.name, email: user.email })
+      );
       const authState = thunkAPI.getState().auth.loginState;
       if (authState) {
         return await thunkAPI.dispatch(getBreedsAction());
