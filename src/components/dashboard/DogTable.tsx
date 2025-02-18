@@ -21,8 +21,10 @@ const DogTable = (props: DogTableType) => {
               style={{ cursor: "pointer" }}
             >
               Name
-              {sort.startsWith("name") && (
+              {sort.startsWith("name") ? (
                 <span>{sort.endsWith("asc") ? " ↑" : " ↓"}</span>
+              ) : (
+                <span className="text-gray-200"> ↕</span>
               )}
             </Table.HeadCell>
             <Table.HeadCell
@@ -30,8 +32,10 @@ const DogTable = (props: DogTableType) => {
               style={{ cursor: "pointer" }}
             >
               Breed
-              {sort.startsWith("breed") && (
+              {sort.startsWith("breed") ? (
                 <span>{sort.endsWith("asc") ? " ↑" : " ↓"}</span>
+              ) : (
+                <span className="text-gray-200"> ↕</span>
               )}
             </Table.HeadCell>
             <Table.HeadCell
@@ -39,8 +43,10 @@ const DogTable = (props: DogTableType) => {
               style={{ cursor: "pointer" }}
             >
               Age
-              {sort.startsWith("age") && (
+              {sort.startsWith("age") ? (
                 <span>{sort.endsWith("asc") ? " ↑" : " ↓"}</span>
+              ) : (
+                <span className="text-gray-200"> ↕</span>
               )}
             </Table.HeadCell>
             <Table.HeadCell>Location</Table.HeadCell>
