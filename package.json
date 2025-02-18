@@ -15,6 +15,7 @@
     "@types/axios": "^0.14.4",
     "@types/react-redux": "^7.1.34",
     "@types/react-select": "^5.0.1",
+    "@types/react-toastify": "^4.1.0",
     "axios": "^1.7.9",
     "flowbite": "2.3.0",
     "flowbite-react": "0.10.1",
@@ -25,6 +26,7 @@
     "react-dom": "18",
     "react-redux": "^9.2.0",
     "react-select": "^5.10.0",
+    "react-toastify": "^11.0.3",
     "sharp": "0.32.6",
     "simplebar-react": "3.2.5"
   },

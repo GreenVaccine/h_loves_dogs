@@ -1,28 +1,40 @@
-import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import api from "@/utils/api/axios";
 import { authStateType } from "@/types/store";
-import { name, email } from "@/test/data";
 import { RootState } from "..";
 
 const initialState: authStateType = {
-  loginState: false,
+  loginState: true,
   name: "",
   email: "",
   loading: false,
 };
 
-export const signInAction = createAsyncThunk("get/breeds", async () => {
-  const response = await api.post("/auth/login", {
-    name,
-    email,
-  });
+export const signInAction = createAsyncThunk(
+  "auth/signin",
+  async ({ name, email }: { name: string; email: string }) => {
+    const response = await api.post("/auth/login", {
+      name,
+      email,
+    });
+    return response.data;
+  }
+);
+
+export const signOutAction = createAsyncThunk("auth/signout", async () => {
+  const response = await api.post("/auth/logout");
   return response.data;
 });
 
 const authReducer = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    setStoreAction: (state, action) => {
+      state.name = action.payload.name;
+      state.email = action.payload.email;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(signInAction.pending, (state) => {
@@ -34,11 +46,22 @@ const authReducer = createSlice({
       })
       .addCase(signInAction.rejected, (state) => {
         state.loading = false;
+      })
+      .addCase(signOutAction.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(signOutAction.fulfilled, (state, action) => {
+        state.loginState = action.payload === "OK" ? false : true;
+        state.loading = false;
+      })
+      .addCase(signOutAction.rejected, (state) => {
+        state.loading = false;
       });
   },
 });
 
-export const selectLoginState = (state: RootState) => state.auth.loginState;
-export const selectLoginLoading = (state: RootState) => state.auth.loading;
+export const { setStoreAction } = authReducer.actions;
+
+export const selectLoginState = (state: RootState) => state.auth;
 
 export default authReducer.reducer;

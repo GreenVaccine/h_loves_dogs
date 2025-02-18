@@ -17,8 +17,8 @@ const TableSearch = (props: TableSearchType) => {
     handleMultiSelectOptions,
   } = props;
   return breedsLeng > 0 ? (
-    <div className="flex flex-row justify-between px-6 items-end mt-4">
-      <div className="flex items-center w-3/5">
+    <div className="flex flex-row justify-between px-6 py-6 items-end mt-4">
+      <div className="flex items-center md:w-3/5 w-full mr-6">
         <MultiSelect
           options={handleMultiSelectOptions()}
           isMulti
@@ -30,11 +30,11 @@ const TableSearch = (props: TableSearchType) => {
           noOptionsMessage={() => "No breeds found"}
           onChange={handleBreedsChange}
           placeholder="Select breeds..."
-          className="basic-multi-select w-64"
+          className="basic-multi-select w-full"
           classNamePrefix="select"
         />
       </div>
-      <div className="flex justify-between w-2/5">
+      <div className="flex justify-between md:w-2/5 w-full">
         <div className="flex items-center">
           <label className="text-sm font-medium text-gray-700">MinAge:</label>
           <TextInput

@@ -148,21 +148,11 @@ const Main = () => {
   };
 
   return (
-    <div className="rounded-sm dark:shadow-dark-md shadow-md bg-white dark:bg-darkgray py-6 px-0 relative w-full break-words">
-      <div className="px-6">
-        <h5 className="card-title">We love dogs</h5>
+    <div className="rounded-sm shadow-dark-md bg-white dark:bg-darkgray py-6 px-0 relative w-full break-words">
+      <div className="px-6 ">
+        <h5 className="card-title">Let's search your favorite dogs!</h5>
+        <div className="border-black border-b-[3px] border-solid"></div>
       </div>
-      <TablePagination
-        {...{
-          total,
-          breedsLeng,
-          handleGoPageNumber,
-          handlePageNumChange,
-          handlePerPageChange,
-          page: search.page.number,
-          perPage: search.page.perPage,
-        }}
-      />
       <TableSearch
         {...{
           setSearch,
@@ -176,6 +166,17 @@ const Main = () => {
         }}
       />
       <div className="mb-6" />
+      <TablePagination
+        {...{
+          total,
+          breedsLeng,
+          handleGoPageNumber,
+          handlePageNumChange,
+          handlePerPageChange,
+          page: search.page.number,
+          perPage: search.page.perPage,
+        }}
+      />
       <DogTable
         {...{
           dogs,
