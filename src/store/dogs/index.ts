@@ -74,7 +74,9 @@ export const getDogsAction = createAsyncThunk<any, void, { state: RootState }>(
   async (_, thunkAPI) => {
     const dogsID = thunkAPI.getState().dogs.dogsID;
     const dogResponse = await api.post("/dogs", dogsID);
+    const favoriteDog = await api.post("/dogs/match", dogsID);
     const dogs = dogResponse.data;
+    const fDogs = favoriteDog.data;
     const zip = dogs.map((dog: dogType) => dog.zip_code);
     const locationsResponse = await api.post("/locations", zip);
     const locations = locationsResponse.data;
@@ -83,6 +85,7 @@ export const getDogsAction = createAsyncThunk<any, void, { state: RootState }>(
       zip_code: locations.find(
         (location: locationType) => location?.zip_code === dog.zip_code
       ),
+      adoption: fDogs.match === dog.id,
     }));
     return data;
   }
