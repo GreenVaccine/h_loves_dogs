@@ -14,8 +14,8 @@ const TablePagination = (props: TablePaginationType) => {
     handlePageNumChange,
   } = props;
   return breedsLeng > 0 ? (
-    <div className="flex flex-row justify-between px-6 items-end">
-      <div className="flex items-center w-3/5">
+    <div className="flex lg:flex-row flex-col justify-between px-6 items-end">
+      <div className="flex items-center justify-center lg:w-3/5 w-full lg:mb-0 mb-2 overflow-x-auto">
         <Pagination
           layout="pagination"
           currentPage={page}
@@ -24,13 +24,15 @@ const TablePagination = (props: TablePaginationType) => {
           onPageChange={handlePageNumChange}
         />
       </div>
-      <div className="flex justify-between w-2/5">
+      <div className="flex justify-between justify-center lg:w-2/5 w-full">
         <div className="flex items-center">
-          <label className="text-sm font-medium text-gray-700">Per Page:</label>
+          <label className="hidden sm:flex text-sm font-medium text-gray-700">
+            Per Page:
+          </label>
           <Select
             value={perPage}
             onChange={handlePerPageChange}
-            className="w-24"
+            className="lg:w-24 md:w-48 w-32"
           >
             <option value="10">10</option>
             <option value="25">25</option>
@@ -38,10 +40,12 @@ const TablePagination = (props: TablePaginationType) => {
           </Select>
         </div>
         <div className="flex items-center">
-          <label className="text-sm font-medium text-gray-700">Go To:</label>
+          <label className="hidden sm:flex text-sm font-medium text-gray-700">
+            Go To:
+          </label>
           <TextInput
             type="number"
-            className="w-24"
+            className="lg:w-24 md:w-48 w-32"
             placeholder={`${Math.ceil(total / Number(perPage))}`}
             onChange={handleGoPageNumber}
           />

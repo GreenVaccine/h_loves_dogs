@@ -31,6 +31,7 @@ export type dogsType = {
   img: string;
   name: string;
   zip_code: locationType;
+  adoption: boolean;
 };
 
 export type authStateType = {

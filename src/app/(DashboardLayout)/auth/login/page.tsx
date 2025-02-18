@@ -19,7 +19,6 @@ const BoxedLogin = () => {
   useEffect(() => {
     const name = localStorage.getItem("name") || "";
     const email = localStorage.getItem("email") || "";
-    console.log(name, email);
     if (
       name !== "" &&
       name !== "undefined" &&

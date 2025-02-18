@@ -1,9 +1,11 @@
 "use client";
 import React from "react";
-import { Table } from "flowbite-react";
-
 import Image from "next/image";
+
+import { Icon } from "@iconify/react";
+import { Table } from "flowbite-react";
 import SimpleBar from "simplebar-react";
+
 import { DogTableType } from "@/types/components";
 
 const DogTable = (props: DogTableType) => {
@@ -42,6 +44,7 @@ const DogTable = (props: DogTableType) => {
               )}
             </Table.HeadCell>
             <Table.HeadCell>Location</Table.HeadCell>
+            <Table.HeadCell>Best Adoption</Table.HeadCell>
           </Table.Head>
           <Table.Body className="divide-y divide-border dark:divide-darkborder ">
             {loading
@@ -72,6 +75,11 @@ const DogTable = (props: DogTableType) => {
                         <div className="h-6 w-64 bg-gray-200 rounded-md" />
                       </div>
                     </Table.Cell>
+                    <Table.Cell>
+                      <div className="flex animate-pulse items-center ">
+                        <div className="h-6 w-6 bg-gray-200 rounded-md" />
+                      </div>
+                    </Table.Cell>
                   </Table.Row>
                 ))
               : dogs.map((dog, index) => (
@@ -100,8 +108,23 @@ const DogTable = (props: DogTableType) => {
                     <Table.Cell>{dog.age}</Table.Cell>
                     <Table.Cell>
                       {dog.zip_code
-                        ? `${dog.zip_code.city}, ${dog.zip_code?.county}, ${dog.zip_code?.state}`
-                        : "N/A"}
+                        ? `${dog.zip_code.zip_code}, ${dog.zip_code.city}, ${dog.zip_code?.county}, ${dog.zip_code?.state}`
+                        : `N/A`}
+                    </Table.Cell>
+                    <Table.Cell>
+                      {dog.adoption ? (
+                        <Icon
+                          className="text-primary"
+                          icon="solar:medal-ribbons-star-bold-duotone"
+                          height={40}
+                        />
+                      ) : (
+                        <Icon
+                          className="text-error"
+                          icon="solar:medal-ribbons-star-bold-duotone"
+                          height={40}
+                        />
+                      )}
                     </Table.Cell>
                   </Table.Row>
                 ))}
