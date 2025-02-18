@@ -37,8 +37,6 @@ const Header = () => {
         fluid
         className={` rounded-none bg-transparent dark:bg-transparent py-4 sm:px-30 px-4`}
       >
-        {/* Mobile Toggle Icon */}
-
         <div className="flex gap-3 items-center justify-between w-full ">
           <div className="flex gap-2 items-center justify-center">
             <div className="w-full">
