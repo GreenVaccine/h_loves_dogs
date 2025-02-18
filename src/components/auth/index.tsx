@@ -1,20 +1,34 @@
 "use client";
-import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { selectLoginState } from "@/store/auth";
-import { useRouter } from "next/navigation";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { AppDispatch } from "@/store";
+import { selectLoginState, signInAction } from "@/store/auth";
+import FashionLoading from "@/components/common/loading";
 
-const AuthIndex = ({ children }: { children: React.ReactNode }) => {
-  const router = useRouter();
-  const loginState = useSelector(selectLoginState);
+const AuthIndex = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const { loginState, loading } = useSelector(selectLoginState);
+  const [isLoggedIn, setIsLoggedIn] = useState(loginState);
 
   useEffect(() => {
-    if (!loginState) {
-      router.push("/auth/login");
+    const name = localStorage.getItem("name") || "";
+    const email = localStorage.getItem("email") || "";
+    if (
+      name !== "" &&
+      name !== "undefined" &&
+      email !== "" &&
+      email !== "undefined" &&
+      !loginState
+    ) {
+      dispatch(signInAction({ name, email }));
     }
-  }, [loginState, router]);
+    setIsLoggedIn(loginState);
+  }, [loginState]);
 
-  return <>{children}</>;
+  if (loading) {
+    return <FashionLoading />;
+  }
+  return isLoggedIn;
 };
 
 export default AuthIndex;
