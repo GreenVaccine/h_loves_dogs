@@ -1,36 +1,37 @@
+# Fetch Frontend Take-Home Exercise (We love dogs🐾)
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+## 🔍Overview
 
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
+This project is a dog adoption website built with Next.js and TypeScript. It allows users to search for shelter dogs, mark favorites, and generate matches based on their preferences. The goal was to create a seamless, user-friendly experience to help dog lovers find their perfect companion.
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**Live Demo**: [🚀](https://mysticblackmask.github.io/h-countries_weather)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## 🔑Features
 
-## Learn More
+- **Login Screen**: Users can enter their name and email to authenticate with the Fetch API.
+- **Search Dogs**: After login, users can browse through available dogs.
+- **Match Generation**: When the user finishes selecting dogs, they can generate a match by sending their selected dog IDs to the /dogs/match endpoint.
 
-To learn more about Next.js, take a look at the following resources:
+## 💼API Integration Challenges
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
+Integrating with the provided API posed several challenges:
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+- **Large Array Handling**: The API returns more than 100 dog entries. Handling such large arrays proved difficult, as the frontend struggled with mapping and accessing the data efficiently. This caused issues with pagination and performance when filtering/searching the dogs.
+
+- **Inefficient API Flow**: The API's design required fetching individual dog data using the dog IDs. This made the frontend slower as it had to request multiple API calls for each dog’s detailed data. Additionally, sending a list of dog IDs to fetch their data, instead of receiving the full list at once, added unnecessary complexity and performance bottlenecks. This slow response from the backend affected the overall user experience.
+
+## 🛠Technologies Used
+
+- **Next.js**: Framework for building the React app.
+- **TypeScript**: For type safety and better maintainability.
+- **Flowbite**: Component library used for UI elements like buttons, forms, etc.
+- **Redux**: For managing authentication state and dog search data.
+- **Vercel**: For deploying the application.
+
+## 📌Conclusion
+
+While the backend API integration was challenging, particularly with large datasets and inefficient calls, the project was successfully completed. The frontend is fully functional with features such as login, dog search, favorites, and match generation. Further improvements could be made with a more efficient backend or optimizations to reduce the number of API calls.
