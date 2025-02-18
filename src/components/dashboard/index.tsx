@@ -4,7 +4,7 @@ import Header from "@/app/(DashboardLayout)/layout/Header";
 
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/store";
-import { selectLoginState } from "@/store/auth";
+import { selectLoginState, signInAction } from "@/store/auth";
 import { useSelector } from "react-redux";
 import FashionLoading from "@/components/common/loading";
 import BoxedLogin from "@/app/(DashboardLayout)/auth/login/page";
@@ -15,6 +15,17 @@ const DashBoardIndex = ({ children }: { children: React.ReactNode }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(loginState);
 
   useEffect(() => {
+    const name = localStorage.getItem("name") || "";
+    const email = localStorage.getItem("email") || "";
+
+    if (
+      name !== "" &&
+      name !== "undefined" &&
+      email !== "" &&
+      email !== "undefined"
+    ) {
+      dispatch(signInAction({ name, email }));
+    }
     setIsLoggedIn(loginState);
   }, [loginState]);
 
