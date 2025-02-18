@@ -4,7 +4,7 @@ import { authStateType } from "@/types/store";
 import { RootState } from "..";
 
 const initialState: authStateType = {
-  loginState: true,
+  loginState: false,
   name: "",
   email: "",
   loading: false,
@@ -33,6 +33,8 @@ const authReducer = createSlice({
     setStoreAction: (state, action) => {
       state.name = action.payload.name;
       state.email = action.payload.email;
+      localStorage.setItem("name", action.payload.name);
+      localStorage.setItem("email", action.payload.email);
     },
   },
   extraReducers: (builder) => {
@@ -52,6 +54,8 @@ const authReducer = createSlice({
       })
       .addCase(signOutAction.fulfilled, (state, action) => {
         state.loginState = action.payload === "OK" ? false : true;
+        localStorage.removeItem("name");
+        localStorage.removeItem("email");
         state.loading = false;
       })
       .addCase(signOutAction.rejected, (state) => {
