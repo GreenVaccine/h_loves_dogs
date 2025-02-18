@@ -28,10 +28,17 @@ export const getBreedsAction = createAsyncThunk<
     return response.data;
   } catch (error: any) {
     const user = thunkAPI.getState().auth;
-    if (error.response?.status === 401) {
-      await thunkAPI.dispatch(
-        signInAction({ name: user.name, email: user.email })
-      );
+    const name = localStorage.getItem("name") || "";
+    const email = localStorage.getItem("email") || "";
+    if (
+      error.response?.status === 401 &&
+      name !== "" &&
+      name !== "undefined" &&
+      email !== "" &&
+      email !== "undefined" &&
+      user.loginState
+    ) {
+      await thunkAPI.dispatch(signInAction({ name, email }));
       const authState = thunkAPI.getState().auth.loginState;
       if (authState) {
         return await thunkAPI.dispatch(getBreedsAction());
@@ -117,7 +124,7 @@ const dogsReducer = createSlice({
         state.breeds = state.breeds.concat(action.payload);
         state.loading = false;
       })
-      .addCase(getBreedsAction.rejected, (state, action) => {
+      .addCase(getBreedsAction.rejected, (state) => {
         state.loading = false;
       })
       .addCase(searchDogsIDAction.pending, (state) => {
@@ -144,8 +151,6 @@ const dogsReducer = createSlice({
   },
 });
 
-export const selectBreeds = (state: RootState) => state.dogs.breeds;
-export const selectDogIDs = (state: RootState) => state.dogs.dogsID;
 export const selectDogs = (state: RootState) => state.dogs;
 
 export default dogsReducer.reducer;
