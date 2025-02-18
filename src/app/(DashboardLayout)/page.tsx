@@ -5,11 +5,14 @@ import Main from "@/components/dashboard/main";
 import { getBreedsAction } from "@/store/dogs";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/store";
+import { useSelector } from "react-redux";
+import { selectLoginState } from "@/store/auth";
 
 const page = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const loginState = useSelector(selectLoginState);
   useEffect(() => {
-    dispatch(getBreedsAction());
+    if (loginState) dispatch(getBreedsAction());
   }, []);
 
   return (

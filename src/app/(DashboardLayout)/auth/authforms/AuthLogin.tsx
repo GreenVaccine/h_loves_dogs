@@ -91,15 +91,7 @@ const AuthLogin = () => {
         />
       </div>
       <div className="flex justify-between my-5">
-        <div className="flex items-center gap-2">
-          <Checkbox id="accept" className="checkbox" />
-          <Label
-            htmlFor="accept"
-            className="opacity-90 font-normal cursor-pointer"
-          >
-            Remeber this Device
-          </Label>
-        </div>
+        <div className="flex items-center gap-2"></div>
       </div>
       <Button
         color={"primary"}

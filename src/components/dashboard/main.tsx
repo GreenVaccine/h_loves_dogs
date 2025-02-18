@@ -3,12 +3,7 @@ import React, { useEffect, useState } from "react";
 import { MultiValue } from "react-select";
 
 import { useSelector, useDispatch } from "react-redux";
-import {
-  selectDogIDs,
-  selectDogs,
-  getDogsAction,
-  searchDogsIDAction,
-} from "@/store/dogs";
+import { selectDogs, getDogsAction, searchDogsIDAction } from "@/store/dogs";
 import { AppDispatch } from "@/store";
 import { dogsType } from "@/types/store";
 import { handleIntegerValidation } from "../validation/dashboard";
@@ -19,8 +14,7 @@ import TableModal from "./Modal";
 import DogTable from "./DogTable";
 
 const Main = () => {
-  const { dogs, total, breeds, loading } = useSelector(selectDogs);
-  const dogIds = useSelector(selectDogIDs);
+  const { dogs, total, breeds, loading, dogsID } = useSelector(selectDogs);
   const dispatch = useDispatch<AppDispatch>();
   const breedsLeng = breeds.length;
   const initialValue: mainInitialValueType = {
@@ -66,7 +60,7 @@ const Main = () => {
 
   useEffect(() => {
     dispatch(getDogsAction());
-  }, [dogIds]);
+  }, [dogsID]);
 
   useEffect(() => {
     dispatch(searchDogsIDAction(handleSendDogID()));
