@@ -17,8 +17,8 @@ const TableSearch = (props: TableSearchType) => {
     handleMultiSelectOptions,
   } = props;
   return breedsLeng > 0 ? (
-    <div className="flex flex-row justify-between px-6 py-6 items-end mt-4">
-      <div className="flex items-center md:w-3/5 w-full mr-6">
+    <div className="flex lg:flex-row flex-col justify-between px-6 py-3 items-end">
+      <div className="flex items-center lg:w-3/5 w-full lg:mr-6">
         <MultiSelect
           options={handleMultiSelectOptions()}
           isMulti
@@ -34,50 +34,69 @@ const TableSearch = (props: TableSearchType) => {
           classNamePrefix="select"
         />
       </div>
-      <div className="flex justify-between md:w-2/5 w-full">
-        <div className="flex items-center">
-          <label className="text-sm font-medium text-gray-700">MinAge:</label>
-          <TextInput
-            type="number"
-            className="w-24"
-            value={min}
-            onChange={(e) =>
+      <div className="flex justify-between lg:w-2/5 w-full mt-3">
+        <AgeInput
+          {...{
+            label: "MinAge",
+            value: min,
+            change: (e) =>
               setSearch((pre) => ({
                 ...pre,
                 age: {
                   ...pre.age,
                   min: handleIntegerValidation(e.target.value),
                 },
-              }))
-            }
-          />
-        </div>
-        <div className="flex items-center">
-          <label className="text-sm font-medium text-gray-700">MaxAge:</label>
-          <TextInput
-            type="number"
-            className="w-24"
-            value={max}
-            onChange={(e) =>
+              })),
+          }}
+        />
+        <AgeInput
+          {...{
+            label: "MaxAge",
+            value: max,
+            change: (e) =>
               setSearch((pre) => ({
                 ...pre,
                 age: {
                   ...pre.age,
                   max: handleIntegerValidation(e.target.value),
                 },
-              }))
-            }
-          />
-        </div>
+              })),
+          }}
+        />
       </div>
     </div>
   ) : (
-    <div className="flex flex-row animate-pulse justify-between px-6 items-end mt-4">
-      <div className="flex h-12 w-64 bg-gray-200 rounded-md" />
-      <div className="flex justify-between">
+    <div className="flex lg:flex-row flex-col justify-between px-6 py-6 items-end animate-pulse">
+      <div className=" flex items-center lg:w-3/5 w-full lg:mr-6 h-12 bg-gray-200 rounded-md" />
+      <div className="flex justify-between lg:w-2/5 w-full mt-3">
         <div className="flex h-12 w-32 bg-gray-200 rounded-md mr-10" />
         <div className="flex h-12 w-32 bg-gray-200 rounded-md ml-10" />
       </div>
+    </div>
+  );
+};
+
+const AgeInput = ({
+  label,
+  value,
+  change,
+}: {
+  label: string;
+  value: string;
+  change: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}) => {
+  return (
+    <div className="flex items-center">
+      <label className="hidden sm:flex text-sm font-medium text-gray-700">
+        {label}:
+      </label>
+      <TextInput
+        type="number"
+        placeholder={`${value}`}
+        className="lg:w-24 md:w-48 w-32"
+        value={value}
+        onChange={change}
+      />
     </div>
   );
 };
