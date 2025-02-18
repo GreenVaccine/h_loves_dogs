@@ -1,14 +1,9 @@
-'use client'
-import React from 'react';
+"use client";
+import React from "react";
 import Image from "next/image";
-import LogoIcon from '/public/images/logos/logo-icon.svg'
-import Link from 'next/link';
+import LogoIcon from "/public/logo.png";
 const Logo = () => {
-  return (
-   <Link href={'/'}>
-      <Image src={LogoIcon} alt="logo" />
-    </Link>
-  )
-}
+  return <Image src={LogoIcon} alt="logo" />;
+};
 
-export default Logo
+export default Logo;
