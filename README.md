@@ -7,7 +7,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 This project is a dog adoption website built with Next.js and TypeScript. It allows users to search for shelter dogs, mark favorites, and generate matches based on their preferences. The goal was to create a seamless, user-friendly experience to help dog lovers find their perfect companion.
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-**Live Demo**: [🚀](https://mysticblackmask.github.io/h-countries_weather)
+**Live Demo**: [🚀](https://lovesdogs-three.vercel.app/)
 
 ## 🔑Features
 
