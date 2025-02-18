@@ -39,8 +39,7 @@ export const getBreedsAction = createAsyncThunk<
       user.loginState
     ) {
       await thunkAPI.dispatch(signInAction({ name, email }));
-      const authState = thunkAPI.getState().auth.loginState;
-      if (authState) {
+      if (user.loginState) {
         return await thunkAPI.dispatch(getBreedsAction());
       }
     }
@@ -121,7 +120,7 @@ const dogsReducer = createSlice({
         state.loading = true;
       })
       .addCase(getBreedsAction.fulfilled, (state, action) => {
-        state.breeds = state.breeds.concat(action.payload);
+        state.breeds = action.payload;
         state.loading = false;
       })
       .addCase(getBreedsAction.rejected, (state) => {
