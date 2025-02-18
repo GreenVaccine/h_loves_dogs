@@ -1,10 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { MultiValue } from "react-select";
-import { Table } from "flowbite-react";
 
-import Image from "next/image";
-import SimpleBar from "simplebar-react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   selectDogIDs,

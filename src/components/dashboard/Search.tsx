@@ -92,7 +92,7 @@ const AgeInput = ({
       </label>
       <TextInput
         type="number"
-        placeholder={`${value}`}
+        placeholder={label}
         className="lg:w-24 md:w-48 w-32"
         value={value}
         onChange={change}
