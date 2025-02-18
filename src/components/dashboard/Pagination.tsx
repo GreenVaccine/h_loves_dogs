@@ -15,7 +15,7 @@ const TablePagination = (props: TablePaginationType) => {
   } = props;
   return breedsLeng > 0 ? (
     <div className="flex lg:flex-row flex-col justify-between px-6 items-end">
-      <div className="flex items-center justify-center lg:w-3/5 w-full lg:mb-0 mb-2 overflow-x-auto">
+      <div className="flex items-center lg:justify-start justify-center lg:w-3/5 w-full lg:mb-0 mb-2 overflow-x-auto">
         <Pagination
           layout="pagination"
           currentPage={page}
