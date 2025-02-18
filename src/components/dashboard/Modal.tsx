@@ -26,7 +26,7 @@ const TableModal = (props: TableModalType) => {
             </div>
           ) : (
             <div className="grid col-span-full items-center">
-              <div className="flex flex-row justify-between">
+              <div className="flex sm:flex-row flex-col justify-between px-2 py-2">
                 <div>
                   <strong>Name: {selectedDog.name}</strong>
                 </div>
@@ -34,7 +34,7 @@ const TableModal = (props: TableModalType) => {
                   <strong>Breed: {selectedDog.breed}</strong>
                 </div>
               </div>
-              <div className="flex flex-row justify-between">
+              <div className="flex sm:flex-row flex-col justify-between px-2 py-2">
                 <div>
                   <strong>Age: {selectedDog.age} years</strong>
                 </div>
